@@ -1,0 +1,118 @@
+.game {
+    background: url(/img/bg\ image.jpeg) center/cover;
+    width:900px;
+    height:700px;
+    position: relative;
+    border-radius: 10px;
+    }
+
+.game__field {
+    background-color: rgba(255, 127, 127, 0.548);
+    width:100%;
+    height:30%;
+    position: absolute;
+    bottom:0;
+}
+
+.pop-up {
+    width:300px;
+    height:130px;
+    background-color: rgba(0, 0, 0, 0.384);
+    position: absolute;
+    top:38px;
+    left:50%;
+    transform: translateX(-50%);
+    visibility: hidden;
+}
+
+.pop-up .pop-up__resfrshBtn {
+    width:50px;
+    height:50px;
+    margin:0 auto;
+    background-color: ivory;
+    border:3px solid black;
+    border-radius: 50%;
+    animation: bouncebounce 1s linear infinite;
+}
+
+@keyframes bouncebounce {
+    0%{
+        transform: none
+    }
+    50%{
+        transform: scale(1.1)
+    }
+    100%{
+        transform: none
+    }
+}
+
+.pop-up .pop-up__message {
+    margin-top:7px;
+    color:whitesmoke;
+    font-size: 20px;
+}
+
+.game .gmae__control {
+    background-color: rgba(0, 0, 0, 0.384);
+    margin:0 auto;
+    width:300PX;
+    height:150px;
+    position: absolute;
+    top:150px;
+    left:50%;
+    transform: translateX(-50%);
+}
+
+.game .gmae__control,
+.game .pop-up {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}   
+
+.game .gmae__control .game__button {
+    width:50px;
+    height:50px;
+    border-radius: 50%;
+    transition:all .3s ease-in-out;
+    border:1px solid transparent;
+}
+
+.game .gmae__control .game__button:hover {
+    color: white;
+    background-color: black;
+    border-color:white
+}
+
+.game .gmae__control .game__timerAndScore {
+    display:flex;
+    width:200px;
+    height:40px;
+    justify-content: center;
+    margin-top:20px;
+}
+
+.game .gmae__control .timer {
+    border: 1px solid whitesmoke;
+    border-radius: 2px;
+    background-color: whitesmoke;
+    padding:5px;
+    text-align: center;
+    font-size:25px;
+    color:black;
+    display:block;
+    width:80px;
+}
+
+.game .gmae__control .score {
+    width:30px;
+    background-color: whitesmoke;
+    border-radius: 2px;
+    margin-left:10px;
+    text-align: center;
+    padding:7px;
+    font-size:25px;
+}
