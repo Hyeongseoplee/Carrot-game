@@ -7,7 +7,6 @@
     }
 
 .game__field {
-    background-color: rgba(255, 127, 127, 0.548);
     width:100%;
     height:30%;
     position: absolute;
@@ -115,4 +114,9 @@
     text-align: center;
     padding:7px;
     font-size:25px;
+}
+
+.carrot, 
+.bug {
+    position:absolute;
 }
