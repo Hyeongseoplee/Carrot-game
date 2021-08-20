@@ -14,13 +14,15 @@
 }
 
 .pop-up {
+  visibility: hidden;
   width: 300px;
   height: 130px;
-  background-color: rgba(0, 0, 0, 0.384);
+  background-color: rgba(0, 0, 0, 0.637);
   position: absolute;
   top: 38px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 100;
 }
 
 .pop-up .pop-up__resfrshBtn {
@@ -52,7 +54,7 @@
 }
 
 .game .gmae__control {
-  background-color: rgba(0, 0, 0, 0.384);
+  background-color: rgba(0, 0, 0, 0.637);
   margin: 0 auto;
   width: 300px;
   height: 150px;
@@ -118,4 +120,8 @@
 .carrot,
 .bug {
   position: absolute;
+}
+
+.showing {
+  visibility: visible;
 }

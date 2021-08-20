@@ -10,6 +10,7 @@ const popUp = document.querySelector('.pop-up');
 const CARROT_COUNT = 5;
 const BUG_COUNT = 5;
 const IMG_SIZE = 80;
+const SHOWING = 'showing';
 
 let TIME_DURATION = 5;
 
@@ -17,7 +18,6 @@ let TIME_DURATION = 5;
 let started = false; 
 
 function startGame() {
-    filed.innerHTML = '';
     initGame();
     startTimer();
 }
@@ -33,7 +33,7 @@ function addItem(className, count, src) {
         img.setAttribute('class', className);
         img.setAttribute('src', src);
         img.setAttribute('id',`${i}`);
-
+        
         filed.appendChild(img);
 
         const x1 = 0;
@@ -57,7 +57,8 @@ function startTimer() {
     const timerId = setInterval(() => {
         TIME_DURATION--;
         if(TIME_DURATION === 0) {
-            clearInterval(timerId)
+            popUp.classList.add(SHOWING);
+            clearInterval(timerId);
         }
         gameTimer.innerHTML=`00:0${TIME_DURATION}`
     } ,1000);
@@ -70,6 +71,7 @@ function startTimer() {
 
 gamePlayBtn.addEventListener('click', () => {
     if(started) { // started = true라면 (게임이 시작했다면)
+        
     } else {
         startGame();  // started = false라면 (게임이 시작했다면)
     }
