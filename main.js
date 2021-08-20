@@ -18,6 +18,7 @@ const BUG_CLASSNAME = 'bug';
 
 let TIME_DURATION = 5;
 let score = 0;
+let timer;
 
 // 게임이 시작 했다는 것을 알려주는 변수에 boolean 인 true(시작했다)값과 false(시작하지않았다)값을 넣어 줄 수 있다
 let started = false; 
@@ -40,9 +41,12 @@ filed.addEventListener('click', (e) => {
         updateScoreBoard(score);
     if(score === CARROT_COUNT) {
         finishGame(true); // 이겼다.
+        stopGameTimer();
+
     }
     }else if(target.matches(".bug")) {
         finishGame(false); // 졌다.
+        stopGameTimer();
     }
 })
 
@@ -107,13 +111,18 @@ function addItem(className, count, src) {
 }
 
 function startTimer() {
-    const timerId = setInterval(() => {
+    timer = setInterval(() => {
         TIME_DURATION--;
         if(TIME_DURATION === 0) {
-            clearInterval(timerId);
+            clearInterval(timer);
+            return
         }
         gameTimer.innerHTML=`00:0${TIME_DURATION}`
     } ,1000);
+}
+
+function stopGameTimer() {
+    clearInterval(timer);
 }
 
 function showPopupMessage(text) {
