@@ -5,16 +5,19 @@ const gamePlayBtn = document.querySelector('.game__button');
 const gameTimer = document.querySelector('.timer');
 const gameScore = document.querySelector('.score');
 const gamePlayBtnIcon = document.querySelector('.fa-play');
-const popUp = document.querySelector('.pop-up'); 
+const popUp = document.querySelector('.pop-up');
+const popUpMessage = document.querySelector('.pop-up__message'); 
 
 const CARROT_COUNT = 5;
 const BUG_COUNT = 5;
 const IMG_SIZE = 80;
 const SHOWING = 'showing';
+const HIDDEN = 'hidden';
 const CARROT_CLASSNAME = 'carrot';
 const BUG_CLASSNAME = 'bug';
 
 let TIME_DURATION = 5;
+let score = 0;
 
 // 게임이 시작 했다는 것을 알려주는 변수에 boolean 인 true(시작했다)값과 false(시작하지않았다)값을 넣어 줄 수 있다
 let started = false; 
@@ -27,17 +30,35 @@ function startGame() {
 filed.addEventListener('click', (e) => {
     // 현재 started는 true.
     if(!started){ // started 가 false라면, 게임이 시작하지 않았다면
-        return // 더 이상 함수 실행을 진행하지 않고 종료한다.
+        return // 더 이상 함수 실행을 진행하지 않고 종료한다
     }
 
     const target = e.target;
     if(target.matches(".carrot")) {
         target.remove();
+        score++;
+        updateScoreBoard(score);
+    if(score === CARROT_COUNT) {
+        finishGame(true); // 이겼다.
+    }
     }else if(target.matches(".bug")) {
-        popUp.classList.add(SHOWING);
-        return
+        finishGame(false); // 졌다.
     }
 })
+
+function finishGame(win) {
+    started=false;
+    hideGameBtn();
+    showPopupMessage(win ?'YOU WIN' :"YOU LOST");
+}
+
+function hideGameBtn() {
+    gamePlayBtn.classList.add(HIDDEN);
+}
+
+function updateScoreBoard(score) {
+    gameScore.innerHTML=CARROT_COUNT - score;
+}
 
 function initGame() {
     addItem('carrot', CARROT_COUNT, '/img/carrot.png');
@@ -89,17 +110,20 @@ function startTimer() {
     const timerId = setInterval(() => {
         TIME_DURATION--;
         if(TIME_DURATION === 0) {
-            popUp.classList.add(SHOWING);
             clearInterval(timerId);
         }
         gameTimer.innerHTML=`00:0${TIME_DURATION}`
     } ,1000);
 }
 
+function showPopupMessage(text) {
+    popUp.classList.add(SHOWING);
+    popUpMessage.innerHTML=text;
+}
 
-    function decreaseTime() {
-        console.log(TIME_DURATION--);
-    }
+function decreaseTime() {
+    console.log(TIME_DURATION--);
+}
 
 gamePlayBtn.addEventListener('click', () => {
     if(started) { // started = true라면 (게임이 시작했다면)
