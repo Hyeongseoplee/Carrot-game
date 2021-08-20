@@ -19,6 +19,7 @@ let started = false;
 function startGame() {
     filed.innerHTML = '';
     initGame();
+    startTimer();
 }
 
 function initGame() {
@@ -52,20 +53,20 @@ function addItem(className, count, src) {
     }
 }
 
-// function showStopBtn() {
-//     gamePlayBtnIcon.classList.toggle('fa-stop');
-// }
+function startTimer() {
+    const timerId = setInterval(() => {
+        TIME_DURATION--;
+        if(TIME_DURATION === 0) {
+            clearInterval(timerId)
+        }
+        gameTimer.innerHTML=`00:0${TIME_DURATION}`
+    } ,1000);
+}
 
-// function startTimer() {
-//     const interval = setInterval(() => {
-//             --TIME_DURATION;
-//             if(TIME_DURATION === 0) {
-//                 clearInterval(interval);
-//             }
-//             gameTimer.innerHTML = `00:0${TIME_DURATION}`;
-//         }
-//     , 1000);
-// }
+
+    function decreaseTime() {
+        console.log(TIME_DURATION--);
+    }
 
 gamePlayBtn.addEventListener('click', () => {
     if(started) { // started = true라면 (게임이 시작했다면)
