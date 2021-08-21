@@ -40,9 +40,7 @@ field.addEventListener('click', (e) => {
         finishGame(true); // 이겼다.
     }
     }else if(target.matches(".bug")) {
-        console.log("bugs!!!");
         finishGame(false); // 졌다.
-        stopGameTimer();
     }
 })
 
@@ -69,7 +67,7 @@ function stopGame() {
 }
 
 function finishGame(win) {
-    started=false;
+    started = false;
     hideGameBtn();
     stopGameTimer();
     showPopupMessage(win ? 'YOU WIN' : 'YOU LOST');
@@ -88,6 +86,7 @@ refreshBtn.addEventListener('click', () => {
 function initGame() {
     score=0;
     field.innerHTML = '';
+    gameScore.innerHTML = CARROT_COUNT;
     addItem('carrot', CARROT_COUNT, '/img/carrot.png');
     addItem('bug', BUG_COUNT, '/img/bug.png');
 }
@@ -159,7 +158,11 @@ function showPopupMessage(text) {
     popUpMessage.innerHTML = text;
 }
 
-// 미해결
-// 팝업메시지를 field 바깥으로 분리시켜서 
+// 한번 더 생각해보기
+// 1. 팝업메시지를 field 바깥으로 분리시켜서 
 // refrsh버튼을 누르니 정상적으로 팝업메시지가 뜬다.
 // 그런데 field안에 팝업메시지를 넣었을 때는 왜 팝업메시지가 뜨지 않았던걸까?
+
+// 남은 미해결 문제
+// 1. 벌레를 클릭하여 게임에서 졌을 떄 남은 당근의 갯수가 그대로 다음게임의 화면에 남아있다.
+// (당근을 클릭하면 정상적으로 작동하긴 함)
