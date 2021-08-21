@@ -4,7 +4,7 @@ const CARROT_COUNT = 5;
 const BUG_COUNT = 5;
 const IMG_SIZE = 80;
 
-const filed = document.querySelector('.game__field');
+const field = document.querySelector('.game__field');
 const gamePlayBtn = document.querySelector('.game__button');
 const playBtnIcon = document.querySelector('.fa-play');
 const gameTimer = document.querySelector('.timer');
@@ -25,7 +25,7 @@ let started = false;
 
 
 
-filed.addEventListener('click', (e) => {
+field.addEventListener('click', (e) => {
     // 현재 started는 true.
     if(!started){ // started 가 false라면(=게임이 시작하지 않았다면)
         return // 더 이상의 함수 실행을 진행하지 않고 종료한다
@@ -70,8 +70,8 @@ function stopGame() {
 
 function finishGame(win) {
     started=false;
-    stopGameTimer();
     hideGameBtn();
+    stopGameTimer();
     showPopupMessage(win ? 'YOU WIN' : 'YOU LOST');
 }
 
@@ -81,14 +81,13 @@ function showStopBtn() {
 }
 
 refreshBtn.addEventListener('click', () => {
-    filed.innerHTML='';
     startGame();
+    hiddenPopUp();
 });
 
-// start game
-
-
 function initGame() {
+    score=0;
+    field.innerHTML = '';
     addItem('carrot', CARROT_COUNT, '/img/carrot.png');
     addItem('bug', BUG_COUNT, '/img/bug.png');
 }
@@ -100,12 +99,12 @@ function addItem(className, count, src) {
         img.setAttribute('src', src);
         img.setAttribute('id',`${i}`);
 
-        filed.appendChild(img);
+        field.appendChild(img);
 
         const x1 = 0;
         const y1 = 0;
-        const x2 = filed.getBoundingClientRect().width - IMG_SIZE;
-        const y2 = filed.getBoundingClientRect().height - IMG_SIZE;
+        const x2 = field.getBoundingClientRect().width - IMG_SIZE;
+        const y2 = field.getBoundingClientRect().height - IMG_SIZE;
 
         function generateNumm(min, max) {
             return Math.ceil(Math.random() * ( max + min) - min);
@@ -132,8 +131,6 @@ function startTimer() {
     } ,1000);
 }
 
-// stop game
-
 function updateTimerText(time) {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
@@ -152,8 +149,17 @@ function hideGameBtn() {
     gamePlayBtn.classList.add(HIDDEN);
 }
 
+function hiddenPopUp() {
+    popUp.classList.add(HIDDEN);
+}
+
 function showPopupMessage(text) {
     popUp.classList.remove(HIDDEN);
     popUp.classList.add(SHOWING);
     popUpMessage.innerHTML = text;
 }
+
+// 미해결
+// 팝업메시지를 field 바깥으로 분리시켜서 
+// refrsh버튼을 누르니 정상적으로 팝업메시지가 뜬다.
+// 그런데 field안에 팝업메시지를 넣었을 때는 왜 팝업메시지가 뜨지 않았던걸까?
