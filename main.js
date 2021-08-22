@@ -25,9 +25,8 @@ let started = false;
 
 const bgMusic = new Audio('./sound/bg.mp3');
 const gameWonSound = new Audio('./sound/game_win.mp3');
-const bugClickSound = new Audio('./sound/bug_pull.mp3');
+const alertClickSound = new Audio('./sound/bug_pull.mp3');
 const carrotClickSound = new Audio('./sound/carrot_pull.mp3');
-
 const gameLostSound = new Audio('./sound/carrot_pull.mp3');
 
 
@@ -69,8 +68,10 @@ function startGame() {
 
 function stopGame() {
     started=false;
+    gameLostSound.play();
+    bgMusic.pause();
     stopGameTimer();
-    showStopBtn();
+    hideGameBtn();
     showPopupMessage('retry');
 }
 
@@ -80,7 +81,7 @@ function finishGame(win) {
     if(win === true) {
         gameWonSound.play();
     }else{
-        bugClickSound.play();
+        alertClickSound.play();
 
     }
     hideGameBtn();
@@ -91,6 +92,7 @@ function finishGame(win) {
 function showStopBtn() {
     playBtnIcon.classList.remove('fa-play');
     playBtnIcon.classList.add('fa-stop');
+    gamePlayBtn.classList.remove('hidden');
 }
 
 refreshBtn.addEventListener('click', () => {
@@ -150,7 +152,12 @@ function startTimer() {
 function updateTimerText(time) {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
-    gameTimer.innerHTML = `${minutes} : ${seconds}`;
+
+    gameTimer.innerHTML = `${addZero(minutes)}:${addZero(seconds)}`
+
+    function addZero(number) {
+        return number < 10 ? `0${number}` : number
+    }
 }
 
 function updateScoreBoard() {
@@ -174,3 +181,7 @@ function showPopupMessage(text) {
     popUp.classList.add(SHOWING);
     popUpMessage.innerHTML = text;
 }
+
+// 문제
+// 1. 팝업 메시지 떠있는 동안 stop 버튼 hideen
+// 2. 게임 시작하면 stop 버튼 showing

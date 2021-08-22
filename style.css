@@ -124,6 +124,12 @@ body {
 .carrot,
 .bug {
   position: absolute;
+  cursor: pointer;
+}
+
+.carrot:hover,
+.bug:hover {
+  transform: scale(1.2);
 }
 
 .showing {
