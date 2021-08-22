@@ -23,6 +23,12 @@ let score = 0;
 let timer;
 let started = false; 
 
+const bgMusic = new Audio('./sound/bg.mp3');
+const gameWonSound = new Audio('./sound/game_win.mp3');
+const bugClickSound = new Audio('./sound/bug_pull.mp3');
+const carrotClickSound = new Audio('./sound/carrot_pull.mp3');
+
+const gameLostSound = new Audio('./sound/carrot_pull.mp3');
 
 
 field.addEventListener('click', (e) => {
@@ -30,12 +36,12 @@ field.addEventListener('click', (e) => {
     if(!started){ // started 가 false라면(=게임이 시작하지 않았다면)
         return // 더 이상의 함수 실행을 진행하지 않고 종료한다
     }
-
     const target = e.target;
     if(target.matches(".carrot")) {
         target.remove();
         score++;
         updateScoreBoard();
+        carrotClickSound.play();
     if(score === CARROT_COUNT) {
         finishGame(true); // 이겼다.
     }
@@ -54,6 +60,8 @@ gamePlayBtn.addEventListener('click', () => {
 
 function startGame() {
     started=true;
+    bgMusic.play();
+    bgMusic.currentTime = 0;
     initGame();
     showStopBtn();
     startTimer();
@@ -68,6 +76,13 @@ function stopGame() {
 
 function finishGame(win) {
     started = false;
+    bgMusic.pause();
+    if(win === true) {
+        gameWonSound.play();
+    }else{
+        bugClickSound.play();
+
+    }
     hideGameBtn();
     stopGameTimer();
     showPopupMessage(win ? 'YOU WIN' : 'YOU LOST');
@@ -124,6 +139,8 @@ function startTimer() {
         if(remainingTimeSec <= 0) {
             clearInterval(timer);
             finishGame(score === CARROT_COUNT);
+            bgMusic.pause();
+            gameLostSound.play();
             return
         }
         updateTimerText(--remainingTimeSec);
@@ -157,12 +174,3 @@ function showPopupMessage(text) {
     popUp.classList.add(SHOWING);
     popUpMessage.innerHTML = text;
 }
-
-// 한번 더 생각해보기
-// 1. 팝업메시지를 field 바깥으로 분리시켜서 
-// refrsh버튼을 누르니 정상적으로 팝업메시지가 뜬다.
-// 그런데 field안에 팝업메시지를 넣었을 때는 왜 팝업메시지가 뜨지 않았던걸까?
-
-// 남은 미해결 문제
-// 1. 벌레를 클릭하여 게임에서 졌을 떄 남은 당근의 갯수가 그대로 다음게임의 화면에 남아있다.
-// (당근을 클릭하면 정상적으로 작동하긴 함)
